@@ -51,18 +51,37 @@ class SalesRep {
             //Checking if client is in client array
             if (client.name === name){
                 return `${client.name} has spent ${client.getTotalSpending()}`
-            }
-        return `Customer not found`    
+            } 
         }
+        return `Customer not found`   //ERROR message when not found
     }
 }
-//creating new sales representatives Bella 
+//Adding new Clients
+const customer2 = new Customer("Margarita", "marG@gmail.com")
+//adding a purchase of $145.00
+customer2.addPurchase(145)
+
+const customer3 = new Customer("Luis", "LuisW@gmail.com")
+//adding a purchase of $1185.00
+customer3.addPurchase(1185)
+
+
+//creating new sales representatives Bella and adding clients
 const salesPerson1 = new SalesRep("Bella")
 salesPerson1.addClient(customer1)
+salesPerson1.addClient(customer2)
+salesPerson1.addClient(customer3)
+
 console.log(salesPerson1.clients);
 
-//Looking up what Lena has spent
+//Looking up what Lena, Margarita, and Luis have spent
 console.log(salesPerson1.getClientTotal("Lena"));
+console.log(salesPerson1.getClientTotal("Margarita"));
+console.log(salesPerson1.getClientTotal("Luis"));
 
 //Example of error message
 console.log(salesPerson1.getClientTotal("Bob"));
+
+
+
+
