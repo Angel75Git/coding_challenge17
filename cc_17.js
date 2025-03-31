@@ -21,14 +21,48 @@ class Customer {
     }
 }
 //Logging new customer
-const cusotmer1 = new Customer("Lena", "Lena23@gmail.com")
-console.log(cusotmer1);
+const customer1 = new Customer("Lena", "Lena23@gmail.com")
+console.log(customer1);
 
 //adding a purchase of $150.00
-console.log(cusotmer1.addPurchase(150));
+console.log(customer1.addPurchase(150));
 //adding a purchase of $785.00
-console.log(cusotmer1.addPurchase(785))
+console.log(customer1.addPurchase(785))
 //adding a purchase of $412.00
-console.log(cusotmer1.addPurchase(412));
+console.log(customer1.addPurchase(412));
 //Total
-console.log(cusotmer1.getTotalSpending());
+console.log(customer1.getTotalSpending());
+
+//Task 2
+//Sales Rep Class
+class SalesRep {
+    constructor(name) {
+        this.name = name,
+        this.clients = []
+    }
+    addClient(customer){
+        //adding customer to list
+        this.clients.push(customer)
+    }
+    //adding for loop to find customer
+    getClientTotal(name){
+        for (let i = 0; i < this.clients.length; i++){
+            const client = this.clients[i];
+            //Checking if client is in client array
+            if (client.name === name){
+                return `${client.name} has spent ${client.getTotalSpending()}`
+            }
+        return `Customer not found`    
+        }
+    }
+}
+//creating new sales representatives Bella 
+const salesPerson1 = new SalesRep("Bella")
+salesPerson1.addClient(customer1)
+console.log(salesPerson1.clients);
+
+//Looking up what Lena has spent
+console.log(salesPerson1.getClientTotal("Lena"));
+
+//Example of error message
+console.log(salesPerson1.getClientTotal("Bob"));
