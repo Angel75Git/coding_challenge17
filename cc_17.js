@@ -82,6 +82,29 @@ console.log(salesPerson1.getClientTotal("Luis"));
 //Example of error message
 console.log(salesPerson1.getClientTotal("Bob"));
 
+//task 3
+//VIP Class
+class VIPCustomer extends Customer {
+    constructor(name, email, typeVIP) {
+        super(name, email)
+        this.typeVIP = typeVIP
+    }
+    //overwriting previous method
+    getTotalSpending() {
+        let total = this.purchaseHistory.reduce((total, amount) => total + amount, 0);
+        const bonus = 0.10
+        if (this.typeVIP === "Gold" || this.typeVIP === "Platinum")
+            total += total * bonus;
+        return `Total with bonus is $${total.toFixed(2)}`;
+    }
+}
+//Biily and Sandra get VIP Status
+const customer4 = new VIPCustomer("Billy", "Bill2@gmail.com", "Gold");
+customer4.addPurchase(487)
+customer4.addPurchase(147)
+const customer5 = new VIPCustomer("Sandra", "San4@gmail.com", "Platinum");
+customer5.addPurchase(187)
+customer5.addPurchase(200)
 
-
-
+console.log(customer4.getTotalSpending())
+console.log(customer5.getTotalSpending())
