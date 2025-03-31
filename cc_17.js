@@ -17,7 +17,7 @@ class Customer {
     getTotalSpending(){
         //Reduce array to a single amount
         const totalSpent = this.purchaseHistory.reduce((total, amount) => total + amount, 0);
-        return `Total $${totalSpent.toFixed(2)}`
+        return totalSpent
     }
 }
 //Logging new customer
@@ -55,6 +55,12 @@ class SalesRep {
         }
         return `Customer not found`   //ERROR message when not found
     }
+    getAllClients() {
+        return this.clients.map(client => ({
+            name: client.name,
+            totalSpent: client.getTotalSpending()
+        })
+    )};
 }
 //Adding new Clients
 const customer2 = new Customer("Margarita", "marG@gmail.com")
@@ -91,20 +97,41 @@ class VIPCustomer extends Customer {
     }
     //overwriting previous method
     getTotalSpending() {
-        let total = this.purchaseHistory.reduce((total, amount) => total + amount, 0);
+        let totalSpent = this.purchaseHistory.reduce((total, amount) => total + amount, 0);
         const bonus = 0.10
         if (this.typeVIP === "Gold" || this.typeVIP === "Platinum")
-            total += total * bonus;
-        return `Total with bonus is $${total.toFixed(2)}`;
+            totalSpent += totalSpent * bonus;
+        return totalSpent
     }
 }
 //Biily and Sandra get VIP Status
 const customer4 = new VIPCustomer("Billy", "Bill2@gmail.com", "Gold");
 customer4.addPurchase(487)
 customer4.addPurchase(147)
+salesPerson1.addClient(customer4)
+
 const customer5 = new VIPCustomer("Sandra", "San4@gmail.com", "Platinum");
 customer5.addPurchase(187)
 customer5.addPurchase(200)
+salesPerson1.addClient(customer5)
 
 console.log(customer4.getTotalSpending())
 console.log(customer5.getTotalSpending())
+//Task 4
+//using reduce
+const totalRevenue = salesPerson1.clients.reduce((total, client) => total + client.getTotalSpending(), 0);
+console.log(`Total revenue from all customers: $${totalRevenue.toFixed(2)}`);
+
+//Using Filter
+const highSpendingCustomers = salesPerson1.clients.filter(client => client.getTotalSpending() > 500);
+console.log("High-spending customers:");
+highSpendingCustomers.forEach(client => {
+    console.log(`${client.name} has spent $${client.getTotalSpending().toFixed(2)}`);
+});
+
+//Using Map
+const customerSummary = salesPerson1.getAllClients();
+console.log("Customer summary:");
+customerSummary.forEach(client => {
+    console.log(`${client.name}: $${client.totalSpent.toFixed(2)}`);
+});
